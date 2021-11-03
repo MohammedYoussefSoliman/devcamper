@@ -1,0 +1,28 @@
+{
+  "name": "divcamper",
+  "version": "1.0.0",
+  "description": "api master class",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MohammedYoussefSoliman/devcamper.git"
+  },
+  "keywords": [
+    "api",
+    "node",
+    "development",
+    "bootcamp"
+  ],
+  "author": "Mohammed Soliman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MohammedYoussefSoliman/devcamper/issues"
+  },
+  "homepage": "https://github.com/MohammedYoussefSoliman/devcamper#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}

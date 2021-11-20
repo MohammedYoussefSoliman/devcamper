@@ -2,9 +2,11 @@
   "name": "divcamper",
   "version": "1.0.0",
   "description": "api master class",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=production node server",
+    "dev": "nodemon server"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,12 @@
   },
   "homepage": "https://github.com/MohammedYoussefSoliman/devcamper#readme",
   "devDependencies": {
+    "express": "^4.17.1",
     "nodemon": "^2.0.14"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "mongoose": "^6.0.12"
   }
 }

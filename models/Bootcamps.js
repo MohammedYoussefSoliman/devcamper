@@ -1,6 +1,7 @@
-const Mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const Schema = new Mongoose.Schema({
+const BootcampSchema = new Schema({
   name: {
     type: String,
     required: [true, "bootcamp name is required"],
@@ -12,19 +13,27 @@ const Schema = new Mongoose.Schema({
   description: {
     type: String,
     required: [true, "a description is required"],
-    minlength: [
-      70,
-      "the bootcamp description must not be less than 70 character",
-    ],
+    // minlength: [
+    //   70,
+    //   "the bootcamp description must not be less than 70 character",
+    // ],
     maxlength: [500, "the bootcamp description must not exceed 500 character"],
   },
   website: {
+    type: String,
     match: [
       /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
       "Please add a valid URL",
     ],
   },
-  formatedAddress: {
+  email: {
+    type: String,
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Please add a valid email",
+    ],
+  },
+  address: {
     type: String,
     required: [true, "a address is required"],
   },
@@ -32,29 +41,29 @@ const Schema = new Mongoose.Schema({
   city: String,
   zipCode: String,
   country: String,
-  phoneNumber: {
-    type: Number,
+  phone: {
+    type: String,
     required: [true, "a phoneNumber is required"],
   },
   location: {
     type: {
       type: String,
       enum: ["Point"],
-      required: true,
+      // required: true,
     },
     coordinates: {
       type: [Number],
-      required: true,
       index: "2dsphere",
+      // required: true,
     },
   },
   careers: {
     type: [String],
     enum: [
-      "web development",
-      "mobile development",
-      "Ui/UX",
-      "Business Development",
+      "Web Development",
+      "Mobile Development",
+      "UI/UX",
+      "Business",
       "Data Science",
     ],
   },
@@ -90,4 +99,4 @@ const Schema = new Mongoose.Schema({
   },
 });
 
-module.exports = Mongoose.model("Bootcamp", Schema);
+module.exports = mongoose.model("Bootcamp", BootcampSchema);

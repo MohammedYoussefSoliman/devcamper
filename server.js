@@ -4,10 +4,14 @@ const colors = require("colors");
 env.config({
   path: "./.env",
 });
+const app = express();
+
+//barser
+app.use(express.json());
+
 const bootcampRoutes = require("./routes/bootcamp");
 const connectDatabase = require("./utils/database");
 
-const app = express();
 const PORT = process.env.PORT || 7000;
 const BASE_URL = process.env.BASE_URL;
 

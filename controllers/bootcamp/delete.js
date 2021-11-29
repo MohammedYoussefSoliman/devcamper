@@ -1,3 +1,4 @@
+const Bootcamps = require("../../models/Bootcamps");
 /**
  * @param {request object} req
  * @param {response object} res
@@ -6,11 +7,19 @@
  * @access Admin
  */
 
-function deleteItem(req, res) {
-  res.status(201).json({
-    success: true,
-    data: "deleted bootcamp data " + req.params.id,
-  });
+async function deleteItem(req, res) {
+  try {
+    const bootCamp = await Bootcamps.findByIdAndDelete(req.params.id);
+    res.status(201).json({
+      success: true,
+      data: `bootCamp ${req.params.id} is deleted`,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: "some bloody error occurred ",
+    });
+  }
 }
 
 module.exports = deleteItem;

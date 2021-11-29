@@ -5,12 +5,21 @@
  * @route /api/v1/bootcamp
  * @access Public
  */
+const Bootcamps = require("../../models/Bootcamps");
 
-function get(req, res) {
-  res.status(200).json({
-    success: true,
-    data: "show bootcamp data",
-  });
+async function get(req, res) {
+  try {
+    const bootcamps = await Bootcamps.find();
+    res.status(200).json({
+      success: true,
+      data: bootcamps,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      errors: "an error occured",
+    });
+  }
 }
 
 module.exports = get;

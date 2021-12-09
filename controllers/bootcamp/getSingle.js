@@ -1,3 +1,5 @@
+const { asyncHandler } = require("../../middleware");
+
 /**
  * @param {request object} req
  * @param {response object} res
@@ -7,27 +9,22 @@
  */
 
 const Bootcamps = require("../../models/Bootcamps");
+const ErrorResponse = require("../../utils/ErrorResponse");
 
-async function getSingle(req, res) {
-  try {
-    const bootcamp = await Bootcamps.findById(req.params.id);
-    if (!bootcamp) {
-      return res.status(400).json({
-        success: false,
-        error: "bootcamp not found",
-      });
-    }
-    res.status(200).json({
-      success: true,
-      data: bootcamp,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({
-      success: false,
-      error: "some bloody error occurred ",
-    });
+const getSingle = asyncHandler(async function (req, res, next) {
+  const bootcamp = await Bootcamps.findById(req.params.id);
+  if (!bootcamp) {
+    return next(
+      new ErrorResponse(
+        `the bootcamp ${req.params.id} is not found in our database`,
+        404
+      )
+    );
   }
-}
+  res.status(200).json({
+    success: true,
+    data: bootcamp,
+  });
+});
 
 module.exports = getSingle;

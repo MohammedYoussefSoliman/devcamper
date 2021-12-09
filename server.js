@@ -1,6 +1,8 @@
 const env = require("dotenv");
 const express = require("express");
 const colors = require("colors");
+const { errorHandler } = require("./middleware");
+
 env.config({
   path: "./.env",
 });
@@ -16,6 +18,7 @@ const PORT = process.env.PORT || 7000;
 const BASE_URL = process.env.BASE_URL;
 
 app.use(BASE_URL + "/bootcamp", bootcampRoutes);
+app.use(errorHandler);
 // app.get("/", (req, res) => {
 //   res.send("devCamper app");
 // });

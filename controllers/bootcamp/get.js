@@ -1,3 +1,4 @@
+const { asyncHandler } = require("../../middleware");
 /**
  * @param {request object} req
  * @param {response object} res
@@ -7,19 +8,12 @@
  */
 const Bootcamps = require("../../models/Bootcamps");
 
-async function get(req, res) {
-  try {
-    const bootcamps = await Bootcamps.find();
-    res.status(200).json({
-      success: true,
-      data: bootcamps,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      errors: "an error occured",
-    });
-  }
-}
+const get = asyncHandler(async function (req, res) {
+  const bootcamps = await Bootcamps.find();
+  res.status(200).json({
+    success: true,
+    data: bootcamps,
+  });
+});
 
 module.exports = get;

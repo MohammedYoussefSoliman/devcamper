@@ -439,6 +439,11 @@ finalhandler@~1.1.2:
     statuses "~1.5.0"
     unpipe "~1.0.0"
 
+flk-supportive-is@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/flk-supportive-is/-/flk-supportive-is-0.2.3.tgz#42c6bc4ac4a15c3805fc4705e9932716516e6dbb"
+  integrity sha512-seQr+KJ41I4ujbDynQ2SOBeXfRSKcw5w4giDcQhK52E9ZWdr9qbNBeUQx//RWTeIrfD/THQWoc5j89SM+Out1g==
+
 forwarded@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"

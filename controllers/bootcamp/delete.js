@@ -1,4 +1,5 @@
 const Bootcamps = require("../../models/Bootcamps");
+const { asyncHandler } = require("../../middleware");
 /**
  * @param {request object} req
  * @param {response object} res
@@ -7,19 +8,12 @@ const Bootcamps = require("../../models/Bootcamps");
  * @access Admin
  */
 
-async function deleteItem(req, res) {
-  try {
-    const bootCamp = await Bootcamps.findByIdAndDelete(req.params.id);
-    res.status(201).json({
-      success: true,
-      data: `bootCamp ${req.params.id} is deleted`,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: "some bloody error occurred ",
-    });
-  }
-}
+const deleteItem = asyncHandler(async (req, res) => {
+  const bootCamp = await Bootcamps.findByIdAndDelete(req.params.id);
+  res.status(201).json({
+    success: true,
+    data: `bootCamp ${req.params.id} is deleted`,
+  });
+});
 
 module.exports = deleteItem;

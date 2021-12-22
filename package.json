@@ -32,6 +32,8 @@
     "colors": "^1.4.0",
     "dotenv": "^10.0.0",
     "flk-supportive-is": "^0.2.3",
-    "mongoose": "^6.0.12"
+    "mongoose": "^6.0.12",
+    "node-geocoder": "^3.28.0",
+    "slugify": "^1.6.3"
   }
 }

@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
+const geocoder = require("../utils/geocoder");
 const { Schema } = mongoose;
 
 const BootcampSchema = new Schema({
@@ -37,10 +39,6 @@ const BootcampSchema = new Schema({
     type: String,
     required: [true, "a address is required"],
   },
-  street: String,
-  city: String,
-  zipCode: String,
-  country: String,
   phone: {
     type: String,
     required: [true, "a phoneNumber is required"],
@@ -56,6 +54,12 @@ const BootcampSchema = new Schema({
       index: "2dsphere",
       // required: true,
     },
+    street: String,
+    streetNumber: String,
+    city: String,
+    zipCode: String,
+    stateCode: String,
+    country: String,
   },
   careers: {
     type: [String],
@@ -97,6 +101,29 @@ const BootcampSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+BootcampSchema.pre("save", function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+BootcampSchema.pre("save", async function (next) {
+  const location = await geocoder.geocode(this.address);
+  console.log(location[0]);
+  this.location = {
+    type: "Point",
+    coordinates: [location[0].longitude, location[0].latitude],
+    formattedAddress: location[0].formattedAddress,
+    street: location[0].streetName,
+    streetNumber: location[0].streetNumber,
+    zipCode: location[0].zipcode,
+    country: location[0].countryCode,
+    stateCode: location[0].stateCode,
+    city: location[0].city,
+  };
+  this.address = undefined;
+  next();
 });
 
 module.exports = mongoose.model("Bootcamp", BootcampSchema);

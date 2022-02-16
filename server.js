@@ -12,12 +12,15 @@ const app = express();
 app.use(express.json());
 
 const bootcampRoutes = require("./routes/bootcamp");
+const coursesRoutes = require("./routes/courses");
 const connectDatabase = require("./utils/database");
 
 const PORT = process.env.PORT || 7000;
 const BASE_URL = process.env.BASE_URL;
 
 app.use(BASE_URL + "/bootcamp", bootcampRoutes);
+app.use(BASE_URL + "/courses", coursesRoutes);
+app.use(BASE_URL + "/bootcamp/:bootcampId/courses", coursesRoutes);
 app.use(errorHandler);
 // app.get("/", (req, res) => {
 //   res.send("devCamper app");

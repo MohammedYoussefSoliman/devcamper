@@ -1,4 +1,5 @@
 const { asyncHandler } = require("../../middleware");
+const Bootcamps = require("../../models/Bootcamps");
 /**
  * @param {request object} req
  * @param {response object} res
@@ -6,7 +7,6 @@ const { asyncHandler } = require("../../middleware");
  * @route /api/v1/bootcamp
  * @access Public
  */
-const Bootcamps = require("../../models/Bootcamps");
 
 const get = asyncHandler(async function (req, res, next) {
   let queryData;
@@ -15,7 +15,7 @@ const get = asyncHandler(async function (req, res, next) {
     (match) => `$${match}`
   );
   // determine none params keys
-  const noneParams = ["select", "sort"];
+  const noneParams = ["select", "sort", "page", "limit"];
   noneParams.forEach((param) => delete queryString[param]);
 
   const query = JSON.parse(queryString);
@@ -31,12 +31,38 @@ const get = asyncHandler(async function (req, res, next) {
     queryData.sort(selectFields);
   }
 
-  // excute queryData
+  // Pagination
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 25;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = await Bootcamps.countDocuments();
+
+  queryData.skip(startIndex).limit(limit);
+
+  const pagination = {};
+
+  if (endIndex < total) {
+    pagination.next = {
+      page: page + 1,
+      limit,
+    };
+  }
+
+  if (startIndex > 0) {
+    pagination.previous = {
+      page: page - 1,
+      limit,
+    };
+  }
+
+  // execute queryData
   const bootcamps = await queryData;
   res.status(200).json({
     success: true,
     count: bootcamps.length,
     data: bootcamps,
+    pagination,
   });
 });
 
